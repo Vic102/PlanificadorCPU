@@ -11,7 +11,7 @@ public class SJF {
 		procesos = new ArrayList<Proceso>();
 	}
 	
-	public void addProceso(Proceso proceso) {
+	public void addProcesos(Proceso proceso) {
 		procesos.add(proceso);
 	}
 	
