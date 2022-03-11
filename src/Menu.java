@@ -18,7 +18,9 @@ public class Menu {
 			switch (opcion) {
 			case 1:
 				System.out.println("Has elegido First In First Out");
-				//fun
+				FIFO fifo = new FIFO(iniciarDatosFifo());
+				fifo.calcularTabla();
+				fifo.mostrarTabla();
 				System.out.println("Ha terminado.");
 				break;
 			case 2:
@@ -41,6 +43,21 @@ public class Menu {
 				break;
 			}
 		} while (opcion != 0);
+	}
+	
+	public static ArrayList<Proceso> iniciarDatosFifo() {
+		ArrayList<Proceso> proc = new ArrayList<Proceso>();
+		Proceso proceso1 = new Proceso("A", 0, 5);
+		Proceso proceso2 = new Proceso("B", 2, 6);
+		Proceso proceso3 = new Proceso("C", 8, 4);
+		Proceso proceso4 = new Proceso("D", 10, 5);
+		Proceso proceso5 = new Proceso("E", 12, 2);
+		proc.add(proceso1);
+		proc.add(proceso2);
+		proc.add(proceso3);
+		proc.add(proceso4);
+		proc.add(proceso5);
+		return proc;
 	}
 
 }
