@@ -20,7 +20,7 @@ public class SJF {
 		int sumatorioDuraciones = procesos.get(0).getDuracion();
 		proc.add(procesos.get(0));
 		for (int i = 1; i < procesos.size(); i++) {
-			if ((sumatorioDuraciones > procesos.get(i).getLlegada()) && (procesos.get(i).getDuracion() <1)) {
+			if ((procesos.get(i).getLlegada() < sumatorioDuraciones) && (procesos.get(i-1).getDuracion() < procesos.get(i-1).getDuracion())) {
 				
 			}
 		}
