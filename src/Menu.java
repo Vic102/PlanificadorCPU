@@ -18,14 +18,14 @@ public class Menu {
 			switch (opcion) {
 			case 1:
 				System.out.println("Has elegido First In First Out");
-				FIFO fifo = new FIFO(iniciarDatosFifo());
+				FIFO fifo = new FIFO(iniciarDatos());
 				fifo.calcularTabla();
 				fifo.mostrarTabla();
 				System.out.println("Ha terminado.");
 				break;
 			case 2:
 				System.out.println("Has elegido Shortest Job First");
-				//fun
+				SJF sjf = new SJF(iniciarDatos());
 				System.out.println("Ha terminado.");
 				break;
 			case 3:
@@ -45,7 +45,7 @@ public class Menu {
 		} while (opcion != 0);
 	}
 	
-	public static ArrayList<Proceso> iniciarDatosFifo() {
+	public static ArrayList<Proceso> iniciarDatos() {
 		ArrayList<Proceso> proc = new ArrayList<Proceso>();
 		Proceso proceso1 = new Proceso("A", 0, 5);
 		Proceso proceso2 = new Proceso("B", 2, 6);

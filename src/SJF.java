@@ -22,18 +22,21 @@ public class SJF {
 		int sumatorioDuraciones = procesos.get(0).getDuracion();
 		proc.add(procesos.get(0));
 		for (int i = 1; i < procesos.size(); i++) {
-			if ((procesos.get(i).getLlegada() <= sumatorioDuraciones)) {
-				enCola.add(procesos.get(i));
+			//posible error con el for
+			for (int j = 1; i < procesos.size(); i++) {
+				if ((procesos.get(j).getLlegada() <= sumatorioDuraciones)) {
+					enCola.add(procesos.get(j));
+				}
 			}
-	        for (int x = 0; x < enCola.size() - 1; x++) {
-	            for (int y = 0; y < enCola.size() - x - 1; y++) {                                                              
-	                if (enCola.get(y + 1).getDuracion() < enCola.get(y).getDuracion()) {
-	                    aux = enCola.get(y + 1);
-	                    enCola.set(y+1, enCola.get(y));
-	                    enCola.set(y, aux);
-	                }
-	            }
-	        }
+			for (int x = 0; x < enCola.size() - 1; x++) {
+				for (int y = 0; y < enCola.size() - x - 1; y++) {
+					if (enCola.get(y + 1).getDuracion() < enCola.get(y).getDuracion()) {
+						aux = enCola.get(y + 1);
+						enCola.set(y + 1, enCola.get(y));
+						enCola.set(y, aux);
+					}
+				}
+			}
 
 		}
 		return proc;
