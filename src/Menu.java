@@ -33,6 +33,7 @@ public class Menu {
 				//fun
 				RoundRobin rr = new RoundRobin(iniciarDatos());
 				rr.calcular();
+				
 				System.out.println("Ha terminado.");
 				break;
 			case 0:
