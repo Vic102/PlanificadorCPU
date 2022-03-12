@@ -1,5 +1,5 @@
 
-public class Proceso {
+public class Proceso implements Comparable<Proceso>{
 	private String nombre;
 	private int llegada;
 	private int duracion;
@@ -99,6 +99,12 @@ public class Proceso {
 	public String toString() {
 		return "Proceso [nombre=" + nombre + ", llegada=" + llegada + ", duracion=" + duracion + ", inicio=" + inicio
 				+ ", fin=" + fin + ", T=" + T + ", E=" + E + ", P=" + P + "]";
+	}
+
+	@Override
+	public int compareTo(Proceso o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
