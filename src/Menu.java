@@ -7,7 +7,7 @@ public class Menu {
 	public static void main(String[] args) {
 		short opcion;
 		Scanner in = new Scanner(System.in);
-		
+
 		do {
 			System.out.println("=============== Procesos de la CPU ===============");
 			System.out.println("1. First In First Out");
@@ -32,10 +32,10 @@ public class Menu {
 				break;
 			case 3:
 				System.out.println("Has elegido Round Robi");
-				//fun
+				// fun
 				RoundRobin rr = new RoundRobin(iniciarDatos());
 				rr.calcular();
-				
+
 				System.out.println("Ha terminado.");
 				break;
 			case 0:
@@ -49,7 +49,7 @@ public class Menu {
 			}
 		} while (opcion != 0);
 	}
-	
+
 	public static ArrayList<Proceso> iniciarDatos() {
 		ArrayList<Proceso> proc = new ArrayList<Proceso>();
 		Proceso proceso1 = new Proceso("A", 0, 5);

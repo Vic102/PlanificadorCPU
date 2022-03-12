@@ -23,7 +23,8 @@ public class SJF {
 		proc.add(procesos.get(0));
 		for (int i = 1; i < procesos.size(); i++) {
 			for (int j = 1; j < procesos.size(); j++) {
-				if ((procesos.get(j).getLlegada() <= sumatorioDuraciones) && (!proc.contains(procesos.get(j)) && (!enCola.contains(procesos.get(j))))) {
+				if ((procesos.get(j).getLlegada() <= sumatorioDuraciones)
+						&& (!proc.contains(procesos.get(j)) && (!enCola.contains(procesos.get(j))))) {
 					enCola.add(procesos.get(j));
 				}
 			}
@@ -93,6 +94,16 @@ public class SJF {
 
 	public void mostrarTabla() {
 		calcularTabla();
+		Proceso aux;
+		for (int x = 0; x < procesos.size() - 1; x++) {
+			for (int y = 0; y < procesos.size() - x - 1; y++) {
+				if (procesos.get(y + 1).getNombre().compareTo(procesos.get(y).getNombre()) < 0) {
+					aux = procesos.get(y + 1);
+					procesos.set(y + 1, procesos.get(y));
+					procesos.set(y, aux);
+				}
+			}
+		}
 		for (int i = 0; i < procesos.size(); i++) {
 			System.out.println(procesos.get(i).toString());
 		}
