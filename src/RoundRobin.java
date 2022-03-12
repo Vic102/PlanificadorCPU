@@ -23,18 +23,12 @@ public class RoundRobin implements Comparable<Proceso> {
 		this.procesosPila = new Stack<Proceso>();
 	}
 
-	public void pintarRR() {
-		int duracion = 0;
-		for (Proceso proceso : procesos) {
-			duracion += proceso.getDuracion();
-		}
-
-	}
-
 	public void calcular() {
 		int duracion = 0;
 		int tiempo = 0;
 		int cont = 0;
+		//en este caso, pero hay que pedirlo por consola o algo.
+		quantum = 4;
 		int[] arrDuraciones = new int[procesos.size()];
 
 		for (int i = 0; i < procesos.size(); i++) {
@@ -44,27 +38,31 @@ public class RoundRobin implements Comparable<Proceso> {
 		ArrayList<Proceso> arrAux = new ArrayList<Proceso>();
 		String arr = "";
 		procesosPila.add(procesos.get(0));
+		procesosPila.get(0).setInicio(procesosPila.get(0).getLlegada());
 		for (int i = 0; i < procesosPila.size(); i++) {
+			//Esto se supone que era para calcular el inicio, no me sale, paso a T, E y P
+//			if (!procesosPila.contains(procesosPila.get(i))) {
+//				procesosPila.get(i).setInicio(tiempo);				
+//			}
 			duracion = procesosPila.get(i).getDuracion();
 
 			// modificamos el tiempo que le queda al proceso
-			if (duracion >= 4) {
-				procesosPila.get(i).setDuracion(duracion - 4);
-				arr += String.valueOf(4);
-			} else if (duracion < 4 && duracion > 0) {
+			if (duracion >= quantum) {
+				procesosPila.get(i).setDuracion(duracion - quantum);
+				arr += String.valueOf(quantum);
+			} else if (duracion < quantum && duracion > 0) {
 				procesosPila.get(i).setDuracion(duracion - duracion);
 				arr += String.valueOf(duracion);
 			}
 
 			// para establecer cuanto tiempo ha llevado este proceso
-			if (duracion >= 4) {
-				tiempo += 4;
-			} else if (duracion < 4 && duracion > 0) {
+			if (duracion >= quantum) {
+				tiempo += quantum;
+			} else if (duracion < quantum && duracion > 0) {
 				tiempo += duracion;
 			}
 
-			// crear un bucle o algo para mirar si hay procesos con tiempo d llegada <
-			// tiempo para añadirlos a la pila
+			// crear un bucle o algo para mirar si hay procesos con tiempo d llegada < tiempo para añadirlos a la pila
 			for (int j = (i + 1); j < procesos.size(); j++) {
 				if (procesos.get(j).getLlegada() <= tiempo) {
 					procesosPila.add(procesos.get(j));
@@ -88,21 +86,28 @@ public class RoundRobin implements Comparable<Proceso> {
 				i = -1;
 			}
 		}
+		
 		System.out.println(arr);
 
-		
-
-		// esto funcionaria para devolver los tiempos de duracion a cada proceso si en
-		// el arrAux estivieran ordenador. Es algo que hay q hacer
+		// esto funcionaria para devolver los tiempos de duracion a cada proceso si en el arrAux estivieran ordenador. Es algo que hay q hacer
 		for (int i = 0; i < arrAux.size(); i++) {
 			arrAux.get(i).setDuracion(arrDuraciones[i]);
+		}
+		
+		
+		//Para calcular T, E y P de cada proceso
+		for (int i = 0; i < arrAux.size(); i++) {
+			Proceso proc = arrAux.get(i);
+			proc.setT(proc.getFin() - proc.getLlegada());
+			proc.setE(proc.getT() - proc.getDuracion());
+			proc.setP((double)proc.getT() / proc.getDuracion());
 		}
 		System.out.println(arrAux);
 	}
 
 	@Override
 	public int compareTo(Proceso o) {
-		// TODO Auto-generated method stub
+//		String.compare(o.getNombre(), );
 		return 0;
 	}
 
