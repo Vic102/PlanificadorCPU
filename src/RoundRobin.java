@@ -30,6 +30,7 @@ public class RoundRobin {
 		int duracion = 0;
 		int tiempo = 0;
 		int cont = 0;
+		String res = "";
 		
 		Scanner in = new Scanner (System.in);
 		System.out.print("Quantum: ");
@@ -42,7 +43,7 @@ public class RoundRobin {
 		}
 
 		arrAux = new ArrayList<Proceso>();
-		String arr = "";
+//		String arr = "";
 		procesosPila.add(procesos.get(0));
 		procesosPila.get(0).setInicio(procesosPila.get(0).getLlegada());
 		for (int i = 0; i < procesosPila.size(); i++) {
@@ -51,10 +52,10 @@ public class RoundRobin {
 			// modificamos el tiempo que le queda al proceso
 			if (duracion >= quantum) {
 				procesosPila.get(i).setDuracion(duracion - quantum);
-				arr += String.valueOf(quantum);
+//				arr += String.valueOf(quantum);
 			} else if (duracion < quantum && duracion > 0) {
 				procesosPila.get(i).setDuracion(duracion - duracion);
-				arr += String.valueOf(duracion);
+//				arr += String.valueOf(duracion);
 			}
 
 			// para establecer cuanto tiempo ha llevado este proceso
@@ -120,8 +121,38 @@ public class RoundRobin {
 			proc.setE(proc.getT() - proc.getDuracion());
 			proc.setP((double)proc.getT() / proc.getDuracion());
 		}
-		System.out.println(arrAux);
+		tabla();
 	}
+	
+	public void tabla() {
+		for (Proceso proceso : arrAux) {
+			System.out.println(proceso);
+		}
+	}
+	
+//	public void pintar () {
+//		int duracion = arrAux.get(0).getFin();
+//		
+//		for (Proceso proceso : arrAux) {
+//			if (duracion < proceso.getFin()) {
+//				duracion = proceso.getFin();
+//			}
+//		}
+//		
+//		for (int i = 0; i < duracion + 1; i++) {
+//			for (int j = 0; j < arrAux.size(); j++) {
+//				String nombre = arrAux.get(j).getNombre();
+//				String res = "";
+//				//meter cada linea en un string
+//				
+//				for (Proceso proceso : arrAux) {
+//					
+//				}
+//				
+//				System.out.println(nombre + " | " + "" );
+//			}
+//		}
+//	}
 	
 	public void mostrarGrafica() {
 		
@@ -136,13 +167,22 @@ public class RoundRobin {
 		for (int i = 0; i < arrAux.size(); i++) {
 			int esperas = 0;
 			boolean terminado = false;
+			int contQuam = 0;
 			System.out.println();
 			for (int j = 0; j < tiempoTotal; j++) {
-				if ((j >= arrAux.get(i).getLlegada()) && (esperas != arrAux.get(i).getE())) {
+				if ((j >= arrAux.get(i).getLlegada()) && (esperas != arrAux.get(i).getE()) && arrAux.get(i).getLlegada()!= 0) {
 					esperas++;
 					System.out.print(" e ");
 				} else if ((j >= arrAux.get(i).getLlegada()) && (j <= arrAux.get(i).getFin() -1)) {
 					System.out.print(" x ");
+					contQuam++;
+					if (contQuam == quantum) {
+						for (int k = 0; k < arrAux.get(i).getE(); k++) {
+							contQuam=0;
+							System.out.print(" e ");
+							j++;
+						}
+					}
 					if (arrAux.get(i).getDuracion() > 0) {
 						terminado = false;
 					} else {
