@@ -15,16 +15,15 @@ public class SJF {
 		procesos.add(proceso);
 	}
 
-	public ArrayList<Proceso> ordenarProcesos() {
+	public void ordenarProcesos() {
 		Proceso aux;
 		ArrayList<Proceso> proc = new ArrayList<Proceso>();
 		ArrayList<Proceso> enCola = new ArrayList<Proceso>();
 		int sumatorioDuraciones = procesos.get(0).getDuracion();
-		int sumatorioCola = 0;
 		proc.add(procesos.get(0));
 		for (int i = 1; i < procesos.size(); i++) {
 			for (int j = 1; j < procesos.size(); j++) {
-				if ((procesos.get(j).getLlegada() <= sumatorioDuraciones)) {
+				if ((procesos.get(j).getLlegada() <= sumatorioDuraciones) && (!proc.contains(procesos.get(j)) && (!enCola.contains(procesos.get(j))))) {
 					enCola.add(procesos.get(j));
 				}
 			}
@@ -43,19 +42,24 @@ public class SJF {
 				enCola.remove(0);
 			}
 		}
-		return proc;
+		procesos.clear();
+		for (int f = 0; f < proc.size(); f++) {
+			procesos.add(proc.get(f));
+		}
 	}
 
 	public void calcularInicio() {
 		procesos.get(0).setInicio(procesos.get(0).getLlegada());
 		for (int i = 1; i < procesos.size(); i++) {
-
+			procesos.get(i).setInicio(procesos.get(i).getFin() - procesos.get(i).getDuracion());
 		}
 	}
 
 	public void calcularFin() {
+		int sum = 0;
 		for (int i = 0; i < procesos.size(); i++) {
-
+			sum += procesos.get(i).getDuracion();
+			procesos.get(i).setFin(sum);
 		}
 	}
 
@@ -80,14 +84,15 @@ public class SJF {
 	}
 
 	public void calcularTabla() {
-		calcularInicio();
 		calcularFin();
+		calcularInicio();
 		calcularT();
 		calcularE();
 		calcularP();
 	}
 
 	public void mostrarTabla() {
+		calcularTabla();
 		for (int i = 0; i < procesos.size(); i++) {
 			System.out.println(procesos.get(i).toString());
 		}

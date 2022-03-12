@@ -25,12 +25,9 @@ public class Menu {
 				break;
 			case 2:
 				System.out.println("Has elegido Shortest Job First");
-				
 				SJF sjf = new SJF(iniciarDatos());
-				procesos = sjf.ordenarProcesos();
-				for (int i = 0; i < procesos.size(); i++) {
-					System.out.println(procesos.get(i).getNombre());
-				}
+				sjf.ordenarProcesos();
+				sjf.mostrarTabla();
 				System.out.println("Ha terminado.");
 				break;
 			case 3:
