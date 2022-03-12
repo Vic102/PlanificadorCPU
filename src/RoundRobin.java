@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Stack;
 
-public class RoundRobin implements Comparable<Proceso> {
+public class RoundRobin {
 	private int quantum;
 	Stack<Proceso> procesosPila;
 	ArrayList<Proceso> procesos;
@@ -40,8 +41,8 @@ public class RoundRobin implements Comparable<Proceso> {
 		procesosPila.add(procesos.get(0));
 		procesosPila.get(0).setInicio(procesosPila.get(0).getLlegada());
 		for (int i = 0; i < procesosPila.size(); i++) {
-			//Esto se supone que era para calcular el inicio, no me sale, paso a T, E y P
-//			if (!procesosPila.contains(procesosPila.get(i))) {
+			//Esto se supone que era para calcular el inicio, no me sale
+//			if (procesosPila.contains(procesosPila.get(i))) {
 //				procesosPila.get(i).setInicio(tiempo);				
 //			}
 			duracion = procesosPila.get(i).getDuracion();
@@ -58,8 +59,14 @@ public class RoundRobin implements Comparable<Proceso> {
 			// para establecer cuanto tiempo ha llevado este proceso
 			if (duracion >= quantum) {
 				tiempo += quantum;
+				if (procesosPila.get(i).getInicio() == 0 && procesosPila.get(i).getLlegada() != 0) {
+					procesosPila.get(i).setInicio(tiempo - quantum);					
+				}
 			} else if (duracion < quantum && duracion > 0) {
 				tiempo += duracion;
+				if (procesosPila.get(i).getInicio() == 0 && procesosPila.get(i).getLlegada() != 0) {
+					procesosPila.get(i).setInicio(tiempo - duracion);					
+				}
 			}
 
 			// crear un bucle o algo para mirar si hay procesos con tiempo d llegada < tiempo para añadirlos a la pila
@@ -87,9 +94,22 @@ public class RoundRobin implements Comparable<Proceso> {
 			}
 		}
 		
+		//TODO QUITAR
 		System.out.println(arr);
+		
+		//Ordenar los procesos alfabéticamente
+		for (int x = 0; x < arrAux.size() - 1; x++) {
+            for (int y = 0; y < arrAux.size() - x - 1; y++) {
+                if (arrAux.get(y + 1).getNombre().compareTo(arrAux.get(y).getNombre()) < 0) {
+                    Proceso aux = arrAux.get(y + 1);
+                    arrAux.set(y + 1, arrAux.get(y));
+                    arrAux.set(y, aux);
+                }
+            }
+        }
 
-		// esto funcionaria para devolver los tiempos de duracion a cada proceso si en el arrAux estivieran ordenador. Es algo que hay q hacer
+		
+		// esto es para devolver los tiempos de duracion a cada proceso
 		for (int i = 0; i < arrAux.size(); i++) {
 			arrAux.get(i).setDuracion(arrDuraciones[i]);
 		}
@@ -103,12 +123,6 @@ public class RoundRobin implements Comparable<Proceso> {
 			proc.setP((double)proc.getT() / proc.getDuracion());
 		}
 		System.out.println(arrAux);
-	}
-
-	@Override
-	public int compareTo(Proceso o) {
-//		String.compare(o.getNombre(), );
-		return 0;
 	}
 
 }
