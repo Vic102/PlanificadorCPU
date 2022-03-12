@@ -42,7 +42,6 @@ public class SJF {
 				sumatorioDuraciones += enCola.get(0).getDuracion();
 				enCola.remove(0);
 			}
-
 		}
 		return proc;
 	}
