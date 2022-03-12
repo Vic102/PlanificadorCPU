@@ -34,9 +34,9 @@ public class Menu {
 				break;
 			case 3:
 				System.out.println("Has elegido Round Robi");
-				// fun
 				RoundRobin rr = new RoundRobin(iniciarDatos());
 				rr.calcular();
+				rr.mostrarGrafica();
 
 				System.out.println("Ha terminado.");
 				break;

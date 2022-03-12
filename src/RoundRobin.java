@@ -2,12 +2,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.Stack;
 
 public class RoundRobin {
 	private int quantum;
-	Stack<Proceso> procesosPila;
-	ArrayList<Proceso> procesos;
+	private Stack<Proceso> procesosPila;
+	private ArrayList<Proceso> procesos;
+	private ArrayList<Proceso> arrAux;
 
 	public RoundRobin(ArrayList<Proceso> procesos) {
 		this.procesos = new ArrayList<Proceso>();
@@ -28,23 +30,22 @@ public class RoundRobin {
 		int duracion = 0;
 		int tiempo = 0;
 		int cont = 0;
-		//en este caso, pero hay que pedirlo por consola o algo.
-		quantum = 4;
+		
+		Scanner in = new Scanner (System.in);
+		System.out.print("Quantum: ");
+		quantum = in.nextInt();
+				
 		int[] arrDuraciones = new int[procesos.size()];
 
 		for (int i = 0; i < procesos.size(); i++) {
 			arrDuraciones[i] = procesos.get(i).getDuracion();
 		}
 
-		ArrayList<Proceso> arrAux = new ArrayList<Proceso>();
+		arrAux = new ArrayList<Proceso>();
 		String arr = "";
 		procesosPila.add(procesos.get(0));
 		procesosPila.get(0).setInicio(procesosPila.get(0).getLlegada());
 		for (int i = 0; i < procesosPila.size(); i++) {
-			//Esto se supone que era para calcular el inicio, no me sale
-//			if (procesosPila.contains(procesosPila.get(i))) {
-//				procesosPila.get(i).setInicio(tiempo);				
-//			}
 			duracion = procesosPila.get(i).getDuracion();
 
 			// modificamos el tiempo que le queda al proceso
@@ -94,9 +95,6 @@ public class RoundRobin {
 			}
 		}
 		
-		//TODO QUITAR
-		System.out.println(arr);
-		
 		//Ordenar los procesos alfabéticamente
 		for (int x = 0; x < arrAux.size() - 1; x++) {
             for (int y = 0; y < arrAux.size() - x - 1; y++) {
@@ -123,6 +121,40 @@ public class RoundRobin {
 			proc.setP((double)proc.getT() / proc.getDuracion());
 		}
 		System.out.println(arrAux);
+	}
+	
+	public void mostrarGrafica() {
+		
+		int tiempoTotal = arrAux.get(0).getFin();
+		
+		for (Proceso proceso : arrAux) {
+			if (tiempoTotal < proceso.getFin()) {
+				tiempoTotal = proceso.getFin();
+			}
+		}
+		
+		for (int i = 0; i < arrAux.size(); i++) {
+			int esperas = 0;
+			boolean terminado = false;
+			System.out.println();
+			for (int j = 0; j < tiempoTotal; j++) {
+				if ((j >= arrAux.get(i).getLlegada()) && (esperas != arrAux.get(i).getE())) {
+					esperas++;
+					System.out.print(" e ");
+				} else if ((j >= arrAux.get(i).getLlegada()) && (j <= arrAux.get(i).getFin() -1)) {
+					System.out.print(" x ");
+					if (arrAux.get(i).getDuracion() > 0) {
+						terminado = false;
+					} else {
+						terminado = true;
+					}
+				} else {
+					System.out.print(" - ");
+				}
+			}
+		}
+		System.out.println();
+		System.out.println();
 	}
 
 }
