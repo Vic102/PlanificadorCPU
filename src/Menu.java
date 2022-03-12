@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
-	private ArrayList<Proceso> procesos;
+	private static ArrayList<Proceso> procesos;
 
 	public static void main(String[] args) {
 		short opcion;
@@ -25,7 +25,12 @@ public class Menu {
 				break;
 			case 2:
 				System.out.println("Has elegido Shortest Job First");
+				
 				SJF sjf = new SJF(iniciarDatos());
+				procesos = sjf.ordenarProcesos();
+				for (int i = 0; i < procesos.size(); i++) {
+					System.out.println(procesos.get(i).getNombre());
+				}
 				System.out.println("Ha terminado.");
 				break;
 			case 3:
