@@ -21,6 +21,7 @@ public class Menu {
 				FIFO fifo = new FIFO(iniciarDatos());
 				fifo.calcularTabla();
 				fifo.mostrarTabla();
+				fifo.mostrarGrafica();
 				System.out.println("Ha terminado.");
 				break;
 			case 2:
@@ -28,6 +29,7 @@ public class Menu {
 				SJF sjf = new SJF(iniciarDatos());
 				sjf.ordenarProcesos();
 				sjf.mostrarTabla();
+				sjf.mostrarGrafica();
 				System.out.println("Ha terminado.");
 				break;
 			case 3:

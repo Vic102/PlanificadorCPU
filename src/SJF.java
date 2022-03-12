@@ -2,13 +2,16 @@ import java.util.ArrayList;
 
 public class SJF {
 	private ArrayList<Proceso> procesos;
+	private int tiempoTotal;
 
 	public SJF(ArrayList<Proceso> procesos) {
 		this.procesos = procesos;
+		tiempoTotal = 0;
 	}
 
 	public SJF() {
 		procesos = new ArrayList<Proceso>();
+		tiempoTotal = 0;
 	}
 
 	public void addProcesos(Proceso proceso) {
@@ -83,13 +86,20 @@ public class SJF {
 			procesos.get(i).setP(division);
 		}
 	}
-
+	
+	public void calcularTiempoTotal() {
+		for (int i = 0; i < procesos.size(); i++) {
+			tiempoTotal += procesos.get(i).getDuracion();
+		}
+	}
+	
 	public void calcularTabla() {
 		calcularFin();
 		calcularInicio();
 		calcularT();
 		calcularE();
 		calcularP();
+		calcularTiempoTotal();
 	}
 
 	public void mostrarTabla() {
@@ -107,5 +117,24 @@ public class SJF {
 		for (int i = 0; i < procesos.size(); i++) {
 			System.out.println(procesos.get(i).toString());
 		}
+	}
+	
+	public void mostrarGrafica() {
+		for (int i = 0; i < procesos.size(); i++) {
+			int esperas = 0;
+			System.out.println();
+			for (int j = 0; j < tiempoTotal; j++) {
+				if ((j >= procesos.get(i).getLlegada()) && (esperas != procesos.get(i).getE())) {
+					esperas++;
+					System.out.print(" e ");
+				} else if ((j >= procesos.get(i).getLlegada()) && (j <= procesos.get(i).getFin() -1)) {
+					System.out.print(" x ");
+				} else {
+					System.out.print(" - ");
+				}
+			}
+		}
+		System.out.println();
+		System.out.println();
 	}
 }

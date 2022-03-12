@@ -2,13 +2,16 @@ import java.util.ArrayList;
 
 public class FIFO {
 	private ArrayList<Proceso> procesos;
-
+	private int tiempoTotal;
+	
 	public FIFO(ArrayList<Proceso> procesos) {
 		this.procesos = procesos;
+		tiempoTotal = 0;
 	}
 	
 	public FIFO() {
 		procesos = new ArrayList<Proceso>();
+		tiempoTotal = 0;
 	}
 	
 	public void addProceso(Proceso proceso) {
@@ -54,6 +57,7 @@ public class FIFO {
 		calcularT();
 		calcularE();
 		calcularP();
+		tiempoTotal = procesos.get(procesos.size()-1).getFin();
 	}
 	
 	public void mostrarTabla() {
@@ -62,4 +66,22 @@ public class FIFO {
 		}
 	}
 	
+	public void mostrarGrafica() {
+		for (int i = 0; i < procesos.size(); i++) {
+			int esperas = 0;
+			System.out.println();
+			for (int j = 0; j < tiempoTotal; j++) {
+				if ((j >= procesos.get(i).getLlegada()) && (esperas != procesos.get(i).getE())) {
+					esperas++;
+					System.out.print(" e ");
+				} else if ((j >= procesos.get(i).getLlegada()) && (j <= procesos.get(i).getFin() -1)) {
+					System.out.print(" x ");
+				} else {
+					System.out.print(" - ");
+				}
+			}
+		}
+		System.out.println();
+		System.out.println();
+	}
 }
