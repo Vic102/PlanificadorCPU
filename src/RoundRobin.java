@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Stack;
 
-public class RoundRobin {
+public class RoundRobin implements Comparable<Proceso> {
 	private int quantum;
 	Stack<Proceso> procesosPila;
 	ArrayList<Proceso> procesos;
@@ -98,6 +98,12 @@ public class RoundRobin {
 			arrAux.get(i).setDuracion(arrDuraciones[i]);
 		}
 		System.out.println(arrAux);
+	}
+
+	@Override
+	public int compareTo(Proceso o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -1,8 +1,9 @@
 
-public class Proceso implements Comparable<Proceso>{
+public class Proceso{
 	private String nombre;
 	private int llegada;
 	private int duracion;
+	private String tipo;
 	private int inicio;
 	private int fin;
 	private int T;
@@ -13,6 +14,7 @@ public class Proceso implements Comparable<Proceso>{
 		this.nombre = nombre;
 		this.llegada = llegada;
 		this.duracion = duracion;
+		this.tipo = "";
 		inicio = 0;
 		fin = 0;
 		T = 0;
@@ -22,6 +24,7 @@ public class Proceso implements Comparable<Proceso>{
 
 	public Proceso() {
 		this("", 0, 0);
+		tipo = "";
 		inicio = 0;
 		fin = 0;
 		T = 0;
@@ -29,8 +32,10 @@ public class Proceso implements Comparable<Proceso>{
 		P = 0;
 	}
 
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	
-	//creo q esto es completamente innecesario pero ya están puestos, siempre se pueden quitar y parece q he hecho más
 	public String getNombre() {
 		return nombre;
 	}
@@ -99,12 +104,6 @@ public class Proceso implements Comparable<Proceso>{
 	public String toString() {
 		return "Proceso [nombre=" + nombre + ", llegada=" + llegada + ", duracion=" + duracion + ", inicio=" + inicio
 				+ ", fin=" + fin + ", T=" + T + ", E=" + E + ", P=" + P + "]";
-	}
-
-	@Override
-	public int compareTo(Proceso o) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }
