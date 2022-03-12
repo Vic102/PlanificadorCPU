@@ -20,10 +20,10 @@ public class SJF {
 		ArrayList<Proceso> proc = new ArrayList<Proceso>();
 		ArrayList<Proceso> enCola = new ArrayList<Proceso>();
 		int sumatorioDuraciones = procesos.get(0).getDuracion();
+		int sumatorioCola = 0;
 		proc.add(procesos.get(0));
 		for (int i = 1; i < procesos.size(); i++) {
-			//posible error con el for
-			for (int j = 1; i < procesos.size(); i++) {
+			for (int j = 1; j < procesos.size(); j++) {
 				if ((procesos.get(j).getLlegada() <= sumatorioDuraciones)) {
 					enCola.add(procesos.get(j));
 				}
@@ -37,7 +37,11 @@ public class SJF {
 					}
 				}
 			}
-
+			if (enCola.size() >= 1) {
+				proc.add(enCola.get(0));
+				sumatorioDuraciones += enCola.get(0).getDuracion();
+				enCola.remove(0);
+			}
 		}
 		return proc;
 	}
