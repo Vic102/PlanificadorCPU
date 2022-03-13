@@ -28,7 +28,9 @@ public class RoundRobin {
 	 */
 	public void setQuantum() {
 		Scanner in = new Scanner(System.in);
-		System.out.print("Quantum: ");
+		System.out.println("Quantum: ");
+		System.err.println("(Con el 1 no funciona y la duración de los procesos no puede ser mayor que el doble del quantum)");
+		System.out.print("> ");
 		this.quantum = in.nextInt();
 	}
 
