@@ -210,10 +210,12 @@ public class RoundRobin {
 		}
 
 		for (int i = 0; i < arrAux.size(); i++) {
+			char proceso = (char) (65 + i);
 			int esperas = 0;
 			boolean terminado = false;
 			int contQuam = 0;
 			System.out.println();
+			System.out.print(proceso + ": ");
 			for (int j = 0; j < tiempoTotal; j++) {
 				if ((j >= arrAux.get(i).getLlegada()) && (esperas != arrAux.get(i).getE())
 						&& arrAux.get(i).getLlegada() != 0 && arrAux.get(i).getInicio()>j) {
