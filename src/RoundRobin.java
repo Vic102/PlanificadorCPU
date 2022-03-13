@@ -31,11 +31,11 @@ public class RoundRobin {
 		int tiempo = 0;
 		int cont = 0;
 		String res = "";
-		
-		Scanner in = new Scanner (System.in);
+
+		Scanner in = new Scanner(System.in);
 		System.out.print("Quantum: ");
 		quantum = in.nextInt();
-				
+
 		int[] arrDuraciones = new int[procesos.size()];
 
 		for (int i = 0; i < procesos.size(); i++) {
@@ -62,16 +62,17 @@ public class RoundRobin {
 			if (duracion >= quantum) {
 				tiempo += quantum;
 				if (procesosPila.get(i).getInicio() == 0 && procesosPila.get(i).getLlegada() != 0) {
-					procesosPila.get(i).setInicio(tiempo - quantum);					
+					procesosPila.get(i).setInicio(tiempo - quantum);
 				}
 			} else if (duracion < quantum && duracion > 0) {
 				tiempo += duracion;
 				if (procesosPila.get(i).getInicio() == 0 && procesosPila.get(i).getLlegada() != 0) {
-					procesosPila.get(i).setInicio(tiempo - duracion);					
+					procesosPila.get(i).setInicio(tiempo - duracion);
 				}
 			}
 
-			// crear un bucle o algo para mirar si hay procesos con tiempo d llegada < tiempo para añadirlos a la pila
+			// crear un bucle o algo para mirar si hay procesos con tiempo d llegada <
+			// tiempo para añadirlos a la pila
 			for (int j = (i + 1); j < procesos.size(); j++) {
 				if (procesos.get(j).getLlegada() <= tiempo) {
 					procesosPila.add(procesos.get(j));
@@ -95,41 +96,39 @@ public class RoundRobin {
 				i = -1;
 			}
 		}
-		
-		//Ordenar los procesos alfabéticamente
-		for (int x = 0; x < arrAux.size() - 1; x++) {
-            for (int y = 0; y < arrAux.size() - x - 1; y++) {
-                if (arrAux.get(y + 1).getNombre().compareTo(arrAux.get(y).getNombre()) < 0) {
-                    Proceso aux = arrAux.get(y + 1);
-                    arrAux.set(y + 1, arrAux.get(y));
-                    arrAux.set(y, aux);
-                }
-            }
-        }
 
-		
+		// Ordenar los procesos alfabéticamente
+		for (int x = 0; x < arrAux.size() - 1; x++) {
+			for (int y = 0; y < arrAux.size() - x - 1; y++) {
+				if (arrAux.get(y + 1).getNombre().compareTo(arrAux.get(y).getNombre()) < 0) {
+					Proceso aux = arrAux.get(y + 1);
+					arrAux.set(y + 1, arrAux.get(y));
+					arrAux.set(y, aux);
+				}
+			}
+		}
+
 		// esto es para devolver los tiempos de duracion a cada proceso
 		for (int i = 0; i < arrAux.size(); i++) {
 			arrAux.get(i).setDuracion(arrDuraciones[i]);
 		}
-		
-		
-		//Para calcular T, E y P de cada proceso
+
+		// Para calcular T, E y P de cada proceso
 		for (int i = 0; i < arrAux.size(); i++) {
 			Proceso proc = arrAux.get(i);
 			proc.setT(proc.getFin() - proc.getLlegada());
 			proc.setE(proc.getT() - proc.getDuracion());
-			proc.setP((double)proc.getT() / proc.getDuracion());
+			proc.setP((double) proc.getT() / proc.getDuracion());
 		}
 		tabla();
 	}
-	
+
 	public void tabla() {
 		for (Proceso proceso : arrAux) {
 			System.out.println(proceso);
 		}
 	}
-	
+
 //	public void pintar () {
 //		int duracion = arrAux.get(0).getFin();
 //		
@@ -153,34 +152,40 @@ public class RoundRobin {
 //			}
 //		}
 //	}
-	
+
 	public void mostrarGrafica() {
-		
+
 		int tiempoTotal = arrAux.get(0).getFin();
-		
+
 		for (Proceso proceso : arrAux) {
 			if (tiempoTotal < proceso.getFin()) {
 				tiempoTotal = proceso.getFin();
 			}
 		}
-		
+
 		for (int i = 0; i < arrAux.size(); i++) {
 			int esperas = 0;
 			boolean terminado = false;
 			int contQuam = 0;
 			System.out.println();
 			for (int j = 0; j < tiempoTotal; j++) {
-				if ((j >= arrAux.get(i).getLlegada()) && (esperas != arrAux.get(i).getE()) && arrAux.get(i).getLlegada()!= 0) {
+				if ((j >= arrAux.get(i).getLlegada()) && (esperas != arrAux.get(i).getE())
+						&& arrAux.get(i).getLlegada() != 0 && arrAux.get(i).getInicio()>j) {
 					esperas++;
 					System.out.print(" e ");
-				} else if ((j >= arrAux.get(i).getLlegada()) && (j <= arrAux.get(i).getFin() -1)) {
+				} else if (((j >= arrAux.get(i).getLlegada()) && (j <= arrAux.get(i).getFin() - 1)) || arrAux.get(i).getInicio()==j)  {
 					System.out.print(" x ");
+					arrAux.get(i).setDuracion(arrAux.get(i).getDuracion() - 1);
 					contQuam++;
-					if (contQuam == quantum) {
+					if (contQuam >= quantum) {
+						contQuam = 0;
 						for (int k = 0; k < arrAux.get(i).getE(); k++) {
-							contQuam=0;
-							System.out.print(" e ");
-							j++;
+							if (esperas != arrAux.get(i).getE()) {
+								esperas++;
+								contQuam++;
+								System.out.print(" e ");
+								j++;
+							}
 						}
 					}
 					if (arrAux.get(i).getDuracion() > 0) {
