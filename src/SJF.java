@@ -17,7 +17,7 @@ public class SJF {
 	public void addProcesos(Proceso proceso) {
 		procesos.add(proceso);
 	}
-
+	
 	public void ordenarProcesos() {
 		Proceso aux;
 		ArrayList<Proceso> proc = new ArrayList<Proceso>();
