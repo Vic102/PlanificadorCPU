@@ -3,10 +3,12 @@ import java.util.Scanner;
 
 public class Menu {
 	private static ArrayList<Proceso> procesos;
-
+	static Scanner in = new Scanner(System.in);
+	static Scanner text = new Scanner(System.in);
+	
 	public static void main(String[] args) {
 		short opcion;
-		Scanner in = new Scanner(System.in);
+
 
 		do {
 			System.out.println("=============== Procesos de la CPU ===============");
@@ -18,7 +20,7 @@ public class Menu {
 			switch (opcion) {
 			case 1:
 				System.out.println("Has elegido First In First Out");
-				FIFO fifo = new FIFO(iniciarDatos());
+				FIFO fifo = new FIFO(pedirDatos());
 				fifo.calcularTabla();
 				fifo.mostrarTabla();
 				fifo.mostrarGrafica();
@@ -26,7 +28,7 @@ public class Menu {
 				break;
 			case 2:
 				System.out.println("Has elegido Shortest Job First");
-				SJF sjf = new SJF(iniciarDatos());
+				SJF sjf = new SJF(pedirDatos());
 				sjf.ordenarProcesos();
 				sjf.mostrarTabla();
 				sjf.mostrarGrafica();
@@ -64,6 +66,25 @@ public class Menu {
 		proc.add(proceso3);
 		proc.add(proceso4);
 		proc.add(proceso5);
+		return proc;
+	}
+	
+	public static ArrayList<Proceso> pedirDatos() {
+		ArrayList<Proceso> proc = new ArrayList<Proceso>();
+		int numProcs;
+		System.out.print("Introduzca el numero de procesos que quiere introducir: ");
+		numProcs = in.nextInt();
+		for (int i = 0; i < numProcs; i++) {
+			Proceso proceso = new Proceso();
+			System.out.print("Introduzca el nombre del proceso " + (i+1) + ": ");
+			proceso.setNombre(text.nextLine());
+			System.out.print("Introduzca ahora el momento en el que llega: ");
+			proceso.setLlegada(in.nextInt());
+			System.out.print("Introduzca finalmente, la duracion del " + (i+1) +"º proceso: ");
+			proceso.setDuracion(in.nextInt());
+			proc.add(proceso);
+			System.out.println();
+		}
 		return proc;
 	}
 }
