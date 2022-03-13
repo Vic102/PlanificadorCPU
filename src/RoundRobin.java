@@ -174,31 +174,6 @@ public class RoundRobin {
 		}
 	}
 
-
-//	public void pintar () {
-//		int duracion = arrAux.get(0).getFin();
-//		
-//		for (Proceso proceso : arrAux) {
-//			if (duracion < proceso.getFin()) {
-//				duracion = proceso.getFin();
-//			}
-//		}
-//		
-//		for (int i = 0; i < duracion + 1; i++) {
-//			for (int j = 0; j < arrAux.size(); j++) {
-//				String nombre = arrAux.get(j).getNombre();
-//				String res = "";
-//				//meter cada linea en un string
-//				
-//				for (Proceso proceso : arrAux) {
-//					
-//				}
-//				
-//				System.out.println(nombre + " | " + "" );
-//			}
-//		}
-//	}
-
 	public void mostrarGrafica() {
 
 		int tiempoTotal = arrAux.get(0).getFin();

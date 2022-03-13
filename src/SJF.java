@@ -123,7 +123,7 @@ public class SJF {
 		for (int i = 0; i < procesos.size(); i++) {
 			int esperas = 0;
 			System.out.println();
-			System.out.print(procesos.get(i).getNombre() + " ");
+			System.out.print(procesos.get(i).getNombre() + ": ");
 			for (int j = 0; j < tiempoTotal; j++) {
 				if ((j >= procesos.get(i).getLlegada()) && (esperas != procesos.get(i).getE())) {
 					esperas++;

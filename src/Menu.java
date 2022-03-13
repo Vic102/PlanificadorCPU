@@ -35,8 +35,8 @@ public class Menu {
 				System.out.println("Ha terminado.");
 				break;
 			case 3:
-				System.out.println("Has elegido Round Robi");
-				RoundRobin rr = new RoundRobin(iniciarDatos());
+				System.out.println("Has elegido Round Robin");
+				RoundRobin rr = new RoundRobin(pedirDatos());
 				rr.calcular();
 				rr.mostrarGrafica();
 
