@@ -4,13 +4,13 @@ import java.util.Stack;
 
 public class RoundRobin {
 	private int quantum;
-	private Stack<Proceso> procesosPila;
+	private Stack<Proceso> procesosCola;
 	private ArrayList<Proceso> procesos;
 	private ArrayList<Proceso> arrAux;
 
 	public RoundRobin(ArrayList<Proceso> procesos) {
 		this.procesos = new ArrayList<Proceso>();
-		this.procesosPila = new Stack<Proceso>();
+		this.procesosCola = new Stack<Proceso>();
 		// Se supone que los procesos se han metido con un orden de llegada razonable
 		// (ordenado naturalmente) en el ArrayList
 		for (Proceso proceso : procesos) {
@@ -20,7 +20,7 @@ public class RoundRobin {
 
 	public RoundRobin() {
 		this.procesos = new ArrayList<Proceso>();
-		this.procesosPila = new Stack<Proceso>();
+		this.procesosCola = new Stack<Proceso>();
 	}
 
 	/**
@@ -46,28 +46,28 @@ public class RoundRobin {
 			arrDuraciones[i] = procesos.get(i).getDuracion();
 		}
 
-		procesosPila.add(procesos.get(0));
-		procesosPila.get(0).setInicio(procesosPila.get(0).getLlegada());
-		for (int i = 0; i < procesosPila.size(); i++) {
-			duracion = procesosPila.get(i).getDuracion();
+		procesosCola.add(procesos.get(0));
+		procesosCola.get(0).setInicio(procesosCola.get(0).getLlegada());
+		for (int i = 0; i < procesosCola.size(); i++) {
+			duracion = procesosCola.get(i).getDuracion();
 
 			// modificamos el tiempo que le queda al proceso
 			if (duracion >= quantum) {
-				procesosPila.get(i).setDuracion(duracion - quantum);
+				procesosCola.get(i).setDuracion(duracion - quantum);
 			} else if (duracion < quantum && duracion > 0) {
-				procesosPila.get(i).setDuracion(duracion - duracion);
+				procesosCola.get(i).setDuracion(duracion - duracion);
 			}
 
 			// para establecer cuanto tiempo ha llevado este proceso
 			if (duracion >= quantum) {
 				tiempo += quantum;
-				if (procesosPila.get(i).getInicio() == 0 && procesosPila.get(i).getLlegada() != 0) {
-					procesosPila.get(i).setInicio(tiempo - quantum);
+				if (procesosCola.get(i).getInicio() == 0 && procesosCola.get(i).getLlegada() != 0) {
+					procesosCola.get(i).setInicio(tiempo - quantum);
 				}
 			} else if (duracion < quantum && duracion > 0) {
 				tiempo += duracion;
-				if (procesosPila.get(i).getInicio() == 0 && procesosPila.get(i).getLlegada() != 0) {
-					procesosPila.get(i).setInicio(tiempo - duracion);
+				if (procesosCola.get(i).getInicio() == 0 && procesosCola.get(i).getLlegada() != 0) {
+					procesosCola.get(i).setInicio(tiempo - duracion);
 				}
 			}
 
@@ -75,21 +75,21 @@ public class RoundRobin {
 			// tiempo para añadirlos a la pila
 			for (int j = (i + 1); j < procesos.size(); j++) {
 				if (procesos.get(j).getLlegada() <= tiempo) {
-					procesosPila.add(procesos.get(j));
+					procesosCola.add(procesos.get(j));
 					procesos.remove(j);
 					cont++;
 				}
 			}
 
 			// mirar si lo vuelvo a meter en la pila
-			if (procesosPila.get(i).getDuracion() == 0) {
-				procesosPila.get(i).setFin(tiempo);
-				arrAux.add(procesosPila.get(i));
-				procesosPila.remove(i);
-			} else if (procesosPila.get(i).getDuracion() > 0) {
-				Proceso aux = procesosPila.get(i);
-				procesosPila.remove(i);
-				procesosPila.add(aux);
+			if (procesosCola.get(i).getDuracion() == 0) {
+				procesosCola.get(i).setFin(tiempo);
+				arrAux.add(procesosCola.get(i));
+				procesosCola.remove(i);
+			} else if (procesosCola.get(i).getDuracion() > 0) {
+				Proceso aux = procesosCola.get(i);
+				procesosCola.remove(i);
+				procesosCola.add(aux);
 			}
 			i -= cont;
 			if (i < -1) {
